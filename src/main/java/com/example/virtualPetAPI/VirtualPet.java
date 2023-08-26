@@ -63,4 +63,7 @@ public class VirtualPet {
     public void feedPet(){
         hunger = hunger - 2;
     }
+
+    public void setId(long id2) {
+    }
 }

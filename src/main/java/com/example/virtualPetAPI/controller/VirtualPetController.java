@@ -50,11 +50,30 @@ public class VirtualPetController {
         }
     }
    
-    @PostMapping("/api/pets/")
+    @PostMapping("/api/pets/add")
     public ResponseEntity<VirtualPet> createPet(@RequestBody VirtualPet pet) {
-        VirtualPet pets = virtualPetRepository
+        VirtualPet _pets = virtualPetRepository
                 .save(new VirtualPet(pet.getId(), pet.getName(), pet.getSpecies(), pet.getHunger()));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/api/pets/delete/{id}")
+    public ResponseEntity<VirtualPet> deletePet(@PathVariable("id") long id) {
+        Optional<VirtualPet> pet = virtualPetRepository.findById(id);
+
+        if (pet.isPresent()) {
+            VirtualPet p = new VirtualPet(); p.setId(id);
+           virtualPetRepository.delete(p);
+           return new ResponseEntity<>(p, HttpStatus.OK);
+        } else {
+            System.out.println("Id not found");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+           
+        }
+
+    }
+
+   
     
 }
+
