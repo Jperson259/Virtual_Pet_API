@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.example.virtualPetAPI.dao.VirtualPetRepository;
-import com.example.virtualPetAPI.dao.VirtualPetShelterRepository;
-import com.example.virtualPetAPI.entity.VirtualPetShelter;
+
+
 
 @SpringBootApplication
 public class VirtualPetApiApplication {
@@ -17,13 +17,17 @@ public class VirtualPetApiApplication {
 	}
 
 	@Bean
-	CommandLineRunner CommandLineRunner(VirtualPetRepository petRepo, VirtualPetShelterRepository virtualPetShelterRepo) {
+	CommandLineRunner CommandLineRunner(VirtualPetRepository petRepo) {
 		return arg -> {
-			VirtualPetShelter shelter = new VirtualPetShelter(0L, "my cool shelter");
-			shelter.admitPet(new VirtualPet(1L, "Cudo", "Dog"));
-			shelter.admitPet(new VirtualPet(2L, "Pheobe", "Dog"));
-			shelter.admitPet(new VirtualPet(3L, "Butter", "Cat"));
-			virtualPetShelterRepo.save(shelter);
+			
+			VirtualPet roxy = new VirtualPet(1L, "Roxy", "Dog", 5);
+			petRepo.save(roxy);
+
+			VirtualPet blue = new VirtualPet(2L, "Blue", "Dog", 5);
+			petRepo.save(blue);
+
+			VirtualPet buddy = new VirtualPet(3L, "Buddy", "Cat", 5);
+			petRepo.save(buddy);
 		
 			};
 

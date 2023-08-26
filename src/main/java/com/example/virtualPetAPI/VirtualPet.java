@@ -1,7 +1,10 @@
 package com.example.virtualPetAPI;
 
-import jakarta.annotation.*;
+
+
+
 import jakarta.persistence.*;
+
 
 
 
@@ -10,17 +13,22 @@ import jakarta.persistence.*;
 public class VirtualPet {
 
     @Id
-    @Column(name = "id")
+    @GeneratedValue
+    @Column(name = "id", nullable = false, columnDefinition = "TEXT")
     private long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, columnDefinition = "TEXT")
     private String name;
 
-    @Column(name = "species")
+    @Column(name = "species", nullable = false, columnDefinition = "TEXT")
     private String species;
 
-    @Column(name = "hunger")
+    @Column(name = "hunger", nullable = false, columnDefinition = "TEXT")
     private int hunger;
+
+    @ManyToOne()
+    @JoinColumn(name="uniqueId", nullable = false)
+    private VirtualPet virtualPet;
     
 
 
@@ -28,7 +36,7 @@ public class VirtualPet {
 
     }
 
-    public VirtualPet(long id, String name, String species) {
+    public VirtualPet(long id, String name, String species, int hunger) {
         this.id = id;
         this.name = name;
         this.species = species;
