@@ -2,31 +2,30 @@ package com.example.virtualPetAPI.controller;
 
 
 import java.util.*;
-import com.example.virtualPetAPI.*;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.virtualPetAPI.dao.VirtualPetRepository;
+import com.example.virtualPetAPI.entity.VirtualPet;
 
-import jakarta.annotation.Resource;
+
 
 
 
 
 @RestController
-// @RequestMapping("/api/shelter/pet")
+@RequestMapping("/api/pets")
 public class VirtualPetController {
     @Autowired
     VirtualPetRepository virtualPetRepository;
 
     
 
-    @Resource
-    private VirtualPetRepository petRepo;
-
-    @GetMapping("/api/pets/")
+  
+    @GetMapping("/all")
     public ResponseEntity<List<VirtualPet>> getAllPets() {
         List<VirtualPet> pets = virtualPetRepository.findAll();
 
@@ -37,7 +36,7 @@ public class VirtualPetController {
         }
     }
 
-    @GetMapping("/api/pets/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<VirtualPet> getPet(@PathVariable("id") long id) {
         Optional<VirtualPet> pet = virtualPetRepository.findById(id);
 
@@ -50,14 +49,30 @@ public class VirtualPetController {
         }
     }
    
-    @PostMapping("/api/pets/add")
+    @PostMapping("/add")
     public ResponseEntity<VirtualPet> createPet(@RequestBody VirtualPet pet) {
         VirtualPet _pets = virtualPetRepository
-                .save(new VirtualPet(pet.getId(), pet.getName(), pet.getSpecies(), pet.getHunger()));
+                .save(new VirtualPet(pet.getName(), pet.getSpecies(), pet.getHunger()));
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }
+   
+        }
 
-    @DeleteMapping("/api/pets/delete/{id}")
+
+
+    @PutMapping("/{id}")
+    public VirtualPet updatePet(@PathVariable Long id, @RequestBody VirtualPet virtualPet){
+        VirtualPet update = virtualPetRepository.findById(id).orElse(null);
+
+        if (update != null){
+        update.setName(virtualPet.getName());
+        return virtualPetRepository.save(update);
+    }
+    return null;
+}
+
+   
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<VirtualPet> deletePet(@PathVariable("id") long id) {
         Optional<VirtualPet> pet = virtualPetRepository.findById(id);
 

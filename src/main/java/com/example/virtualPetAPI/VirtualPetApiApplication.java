@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.example.virtualPetAPI.dao.VirtualPetRepository;
+import com.example.virtualPetAPI.entity.VirtualPet;
 
 
 
@@ -17,17 +18,17 @@ public class VirtualPetApiApplication {
 	}
 
 	@Bean
-	CommandLineRunner CommandLineRunner(VirtualPetRepository petRepo) {
+	CommandLineRunner CommandLineRunner(VirtualPetRepository virtualPetRepository) {
 		return arg -> {
 			
-			VirtualPet roxy = new VirtualPet(1L, "Roxy", "Dog", 5);
-			petRepo.save(roxy);
+			VirtualPet roxy = new VirtualPet("Roxy", "Dog", 5);
+			virtualPetRepository.save(roxy);
 
-			VirtualPet blue = new VirtualPet(2L, "Blue", "Dog", 5);
-			petRepo.save(blue);
+			VirtualPet blue = new VirtualPet("Blue", "Dog", 5);
+			virtualPetRepository.save(blue);
 
-			VirtualPet buddy = new VirtualPet(3L, "Buddy", "Cat", 5);
-			petRepo.save(buddy);
+			VirtualPet buddy = new VirtualPet("Buddy", "Cat", 5);
+			virtualPetRepository.save(buddy);
 		
 			};
 
