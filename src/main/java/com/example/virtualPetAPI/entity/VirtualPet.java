@@ -1,11 +1,6 @@
 package com.example.virtualPetAPI.entity;
 
-
-
 import jakarta.persistence.*;
-
-
-
 
 @Entity
 @Table(name = "virtual_pet")
@@ -13,7 +8,7 @@ public class VirtualPet {
 
     @Id
     @GeneratedValue
-   @Column(name = "id", nullable = true)
+    @Column(name = "id", nullable = true)
     private long id;
 
     @Column(name = "name", nullable = true)
@@ -25,17 +20,12 @@ public class VirtualPet {
     @Column(name = "hunger", nullable = true)
     private int hunger;
 
-    
-    
-    
-
-
     public VirtualPet() {
 
     }
 
     public VirtualPet(String name, String species, int hunger) {
-        
+
         this.name = name;
         this.species = species;
         this.hunger = 5;
@@ -73,7 +63,5 @@ public class VirtualPet {
     public void setHunger(int hunger) {
         this.hunger = hunger;
     }
-
-
 
 }
